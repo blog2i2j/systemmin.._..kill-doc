@@ -40,7 +40,7 @@
 // @match        http://www.jtysbz.cn:8009/pdf/viewer/*
 // @match        https://www.nssi.org.cn/cssn/js/pdfjs/web/preview.jsp*
 // @match        https://online.71nc.cn/*
-// @match        http://114.251.111.103:18080/kfs/file/read/*
+// @match        https://114.251.111.103:18080/kfs/file/read/*
 // @match        https://bulletin.cebpubservice.com/resource/ceb/js/pdfjs-dist/web/viewer.html*
 // @match        http://121.36.94.83:9008/jsp/yishenqing/appladd/biaozhunfile/flash/previewImg.jsp*
 // @match        http://rbtest.cnca.cn/cnca_kfs/file/read/*
