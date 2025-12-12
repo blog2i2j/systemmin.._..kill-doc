@@ -2,7 +2,7 @@
 // @name         【最强无套路脚本】你能看见多少我能下载多少&下载公开免费的PPT、PDF、DOC、TXT等文件
 // @namespace    http://tampermonkey.net/
 // @homepage	 https://github.com/systemmin/kill-doc
-// @version      7.6
+// @version      7.7
 // @description  百度|原创力|人人|360文库|豆丁|豆丁建筑|道客|MBA智库|得力|七彩学科|金锄头|爱问|蚂蚁|读根网|搜弘|微传网|淘豆网|GB|JJG|行业标准|轻竹办公|自然标准|交通标准|飞书|江苏计量|水利部|招投标|能源标准|认证认可标准|腾讯文档|绿色建站|电网|夸克文库等公开免费文档下载
 // @author       Mr.Fang
 // @match        https://*.book118.com/*
@@ -50,6 +50,7 @@
 // @match        https://vt.quark.cn/blm/quark-doc-main-pc-966/**
 // @match        https://wenku-img.docs.quark.cn/*
 // @match        https://preview-wenku.quark.cn/*
+// @match        https://jtst.mot.gov.cn/kfs/file/read/*
 // @require      https://unpkg.com/jspdf@2.4.0/dist/jspdf.umd.min.js
 // @require      https://unpkg.com/@zip.js/zip.js@2.7.34/dist/zip.min.js
 // @require      https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.js
@@ -375,6 +376,7 @@
 		gbservice: 'gbservice.cn',
 		sgcc: 'ecp.sgcc.com.cn',
 		quark: 'vt.quark.cn',
+		jtst: 'jtst.mot.gov.cn',
 	};
 	const {
 		host,
@@ -897,6 +899,9 @@
 			fileType = "pdf";
 			dom = u.query('#outer-container');
 			select = "._preview-item_lruzz_1 img";
+		} else if (host.includes(domain.jtst)) {
+			fileType = "pdf";
+			select = ".page canvas";
 		}
 		const query = u.query("#btn_ppt_front_pc"); // 原创
 		if (!query) {
@@ -1121,7 +1126,7 @@
 					injection();
 					scrollQuarkPageArea();
 				}
-			} else if (host.includes(domain.docin)) {
+			} else if (host.includes(domain.docin) || host.includes(domain.jtst)) {
 				scrollWinArea()
 			} else if (host.includes(domain.wenku)) {
 				scrollWinArea()
@@ -1236,7 +1241,8 @@
 				host.includes(domain.taodocs) ||
 				host.includes(domain.nrsis) ||
 				host.includes(domain.nea) ||
-				host.includes(domain.rbtest)
+				host.includes(domain.rbtest) ||
+				host.includes(domain.jtst)
 			) {
 				await imageToBase64()
 				conditionDownload();
@@ -1734,7 +1740,7 @@
 				width,
 				height
 			} = await MF_CanvasToBase64(item);
-			saveImageAndPDF(item, blob, i, width, height, host.includes(domain.doc88) || host.includes(
+			saveImageAndPDF(item, blob, i, width, height, host.includes(domain.doc88) ||host.includes(domain.jtst) || host.includes(
 				domain.rbtest))
 			await u.preview(i + 1, length);
 		}
