@@ -2,8 +2,8 @@
 // @name         kill-e-book 
 // @namespace    http://tampermonkey.net/
 // @homepage	 https://github.com/systemmin/kill-doc
-// @version      1.2.9
-// @description  文泉|文泉(scau)|文泉(bit)|高教书苑|中教经典|可知|先晓书院|工程科技(校)|悦读(校)|社会科学文库|畅想之星|书递等公开免费电子书下载
+// @version      1.3.0
+// @description  文泉|文泉(scau)|文泉(bit)|高教书苑|中教经典|可知|先晓书院|工程科技(校)|悦读(校)|社会科学文库(北二外)|畅想之星|书递等公开免费电子书下载
 // @author       Mr.Fang
 // @match        https://*.wqxuetang.com/deep/read/pdf*
 // @match        https://lib--scau-wqxuetang-com-s.vpn.scau.edu.cn/deep/read/*
@@ -13,6 +13,7 @@
 // @match        https://www.zjjd.cn/read-book*
 // @match        https://www.keledge.com/pdfReader*
 // @match        https://xianxiao.ssap.com.cn/readerpdf/static/pdf/web/*
+// @match        https://www-sklib-cn-443.web.bisu.edu.cn/sk_reader/reader.html*
 // @match        https://ersp.lib.whu.edu.cn/*
 // @match        https://dcd.cmpkgs.com/*
 // @match        https://sso.zslib.cn/*
@@ -262,6 +263,7 @@ const _drawImage = CanvasRenderingContext2D.prototype.drawImage;
 		keledge: 'www.keledge.com',
 		elib: 'www.elib.link',
 		xianxiao: 'xianxiao.ssap.com.cn',
+		sklibEdu: 'www-sklib-cn-443.web.bisu.edu.cn',
 		ersp: 'ersp.lib.whu.edu.cn',
 		cmpkgs: 'dcd.cmpkgs.com',
 		zslib: 'sso.zslib.cn',
@@ -363,7 +365,7 @@ const _drawImage = CanvasRenderingContext2D.prototype.drawImage;
 			}
 			select = "#canvas_box .pdf_box";
 			dom = u.query('.pdf_reader');
-		} else if (host.includes(domain.sklib)) {
+		} else if (host.includes(domain.sklib) || host.includes(domain.sklibEdu)) {
 			select = "#viewer .page";
 			dom = u.query('#viewerContainer');
 		} else if (host.includes(domain.cxstar)) {
@@ -442,7 +444,7 @@ const _drawImage = CanvasRenderingContext2D.prototype.drawImage;
 				console.log('重新加载')
 				u.query('.reload_image').click();
 			}
-		} else if (host.includes(domain.elib)) {
+		} else if (host.includes(domain.elib) || host.includes(domain.sklibEdu)) {
 			title = document.title
 		}
 	}
@@ -590,7 +592,7 @@ const _drawImage = CanvasRenderingContext2D.prototype.drawImage;
 		} else if (host.includes(domain.xianxiao)) {
 			canvas = els;
 		} else if (host.includes(domain.cmpkgs) || host.includes(domain.zslib) || host.includes(domain
-				.sklib) || host.includes(domain.cxstar)) {
+				.sklib) || host.includes(domain.cxstar) || host.includes(domain.sklibEdu)) {
 			canvas = els
 		} else if (host.includes(domain.libresource) || host.includes(domain.ydzhy)) {
 			canvas = els
@@ -703,7 +705,7 @@ const _drawImage = CanvasRenderingContext2D.prototype.drawImage;
 				const canvas = node.querySelector('canvas')
 				conditions = isVisible(node) && canvas
 				currentNode = canvas;
-			} else if (host.includes(domain.sklib)) {
+			} else if (host.includes(domain.sklib) || host.includes(domain.sklibEdu)) {
 				const canvas = node.querySelector('canvas')
 				const dataLoaded = u.attr(node, 'data-loaded')
 				if (dataLoaded && canvas) {
